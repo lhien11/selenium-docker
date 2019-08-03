@@ -1,0 +1,30 @@
+version: "3"
+services:
+  hub:
+    image: selenium/hub:3.14
+  chrome:
+    image: selenium/node-chrome:3.14
+    depends_on:
+      - hub
+    environment:
+      - HUB_HOST=hub
+  search-module:
+    image: lhien11/selenium-docker
+    depends_on:
+      - chrome
+    environment:
+      - HUB_HOST=hub
+      - BROWSER=chrome
+      - MODULE=search-module.xml
+    volumes:
+      - ./search-result:/Users/hienle/Documents/shared/test-output
+  book-flight-module:
+    image: lhien11/selenium-docker
+    depends_on:
+      - chrome
+    environment:
+      - HUB_HOST=hub
+      - BROWSER=chrome
+      - MODULE=book-flight-module.xml
+    volumes:
+      - ./book-result:/Users/hienle/Documents/shared/test-output
